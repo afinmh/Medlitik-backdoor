@@ -60,12 +60,14 @@ Route::get('/auth/google/callback', function () {
 
     // Jika belum ada, redirect ke halaman register frontend
     if (!$user) {
-        return redirect()->away("http://localhost:5500/index.html?error=not_registered&email=" . $googleUser->getEmail());
+        // GANTI index.html → /
+        return redirect()->away("http://localhost:3000/?error=not_registered&email=" . $googleUser->getEmail());
     }
 
     // Jika user ditemukan, generate token JWT
     $token = JWTAuth::fromUser($user);
 
     // Redirect ke frontend sambil kirim token dan email
-    return redirect()->away("http://localhost:5500/index.html?token=$token&email=" . $user->email);
+    // GANTI index.html → /
+    return redirect()->away("http://localhost:3000/?token=$token&email=" . $user->email);
 });
